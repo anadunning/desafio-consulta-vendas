@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.devsuperior.dsmeta.dto.SaleDTO;
 import com.devsuperior.dsmeta.dto.SaleMinDTO;
 import com.devsuperior.dsmeta.entities.Sale;
 import com.devsuperior.dsmeta.repositories.SaleRepository;
@@ -23,6 +24,15 @@ public class SaleService {
 		Sale entity = result.get();
 		return new SaleMinDTO(entity);
 	}
+	
+	public List<SaleDTO> getReport(String name) {
+		List<SaleDTO> result = repository.getReport(name);
+		return result;
+	}
+	
+//	public SaleDTO getReport(LocalDate start, LocalDate end, String name) {
+//		return null;
+//	}
 	
 	
 }
