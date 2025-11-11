@@ -10,7 +10,7 @@ public class SaleDTO {
 	private LocalDate date;
 	private Double amount;
 	private String sellerName;
-	
+
 	public SaleDTO(Long id, LocalDate date, Double amount, String sellerName) {
 		this.id = id;
 		this.date = date;

@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.devsuperior.dsmeta.dto.SaleDTO;
 import com.devsuperior.dsmeta.dto.SaleMinDTO;
+import com.devsuperior.dsmeta.dto.SaleSumDTO;
 import com.devsuperior.dsmeta.entities.Sale;
 import com.devsuperior.dsmeta.repositories.SaleRepository;
 
@@ -49,5 +51,29 @@ public class SaleService {
 		
 		Page<SaleDTO> result = repository.getReport(minDate, maxDate, name, pageable);
 		return result;
+	}
+	
+	
+	public List<SaleSumDTO> getSummary(String minDateStr, String maxDateStr) {
+		
+		String pattern = "yyyy-MM-dd";
+		DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern);
+		
+		LocalDate maxDateE = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
+		LocalDate minDateE = maxDateE.minusYears(1L);
+				
+		if (minDateStr.trim().isEmpty()) {
+			minDateStr = String.valueOf(minDateE);
+		}
+		
+		if (maxDateStr.trim().isEmpty()) {
+			maxDateStr = String.valueOf(maxDateE);
+		}
+		
+		LocalDate minDate = LocalDate.parse(minDateStr, fmt);
+		LocalDate maxDate = LocalDate.parse(maxDateStr, fmt);
+		
+		List<SaleSumDTO> list = repository.getSummary(minDate, maxDate);
+		return list;
 	}
 }
